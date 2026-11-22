@@ -37,7 +37,8 @@ jobs:
         run: |
           brew install colima docker qemu
           colima start --vm-type=qemu --cpu 2 --memory 4 --disk 20 --mount /private/tmp:w
-          docker pull "$CLAWREFLEX_SANDBOX_IMAGE"
+          docker pull python@sha256:7e9b0661d175b176a592d3969ccaf702c11b6769a485fa8b0d3769dd07bf1720
+          echo 'CLAWREFLEX_SANDBOX_IMAGE=python@sha256:7e9b0661d175b176a592d3969ccaf702c11b6769a485fa8b0d3769dd07bf1720' >> "$GITHUB_ENV"
           echo 'DOCKER_HOST=unix://'"$HOME"'/.colima/default/docker.sock' >> "$GITHUB_ENV"
           echo 'TMPDIR=/private/tmp' >> "$GITHUB_ENV"
       - run: python -m pip install -e '.[dev]'
