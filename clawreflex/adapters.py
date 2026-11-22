@@ -37,7 +37,8 @@ class PythonAdapter:
         if config.test_runner == "unittest":
             body = (
                 "suite = unittest.defaultTestLoader.discover(" + repr("/work/repo/" + config.test_path)
-                + ", pattern=" + repr(config.test_pattern) + ")\n"
+                + ", pattern=" + repr(config.test_pattern) + ", top_level_dir="
+                + repr("/work/repo/" + config.test_path) + ")\n"
                 "        self.assertGreater(suite.countTestCases(), 0, 'repository suite discovered no tests')\n"
                 "        result = unittest.TextTestRunner(verbosity=1).run(suite)\n"
                 "        self.assertTrue(result.wasSuccessful(), 'repository suite failed')"

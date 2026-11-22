@@ -35,8 +35,8 @@ jobs:
       - name: macOS sandbox VM
         if: runner.os == 'macOS'
         run: |
-          brew install colima docker
-          colima start --cpu 2 --memory 4 --disk 20 --mount /private/tmp:w
+          brew install colima docker qemu
+          colima start --vm-type=qemu --cpu 2 --memory 4 --disk 20 --mount /private/tmp:w
           docker pull "$CLAWREFLEX_SANDBOX_IMAGE"
           echo 'DOCKER_HOST=unix://'"$HOME"'/.colima/default/docker.sock' >> "$GITHUB_ENV"
           echo 'TMPDIR=/private/tmp' >> "$GITHUB_ENV"
