@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Same request, two providers</title>
+<style>
+@font-face{font-family:Manrope;src:url('/fonts/manrope.ttf')}@font-face{font-family:Mono;src:url('/fonts/mono.ttf')}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:#0d131a;color:#f5f4ef;font-family:Manrope,sans-serif}
+body{display:flex;flex-direction:column;padding:40px 48px}
+h1{margin:0 0 6px;font-size:44px;letter-spacing:-1px}.sub{color:#a8b1bc;font-size:24px;margin-bottom:28px}
+main{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:32px;min-height:0}
+.lane{display:flex;flex-direction:column;border:3px solid #344351;border-radius:24px;overflow:hidden;background:#141d26;min-height:0}
+.lane.cb{border-color:#ff6a32}.head{display:flex;justify-content:space-between;align-items:baseline;padding:24px 30px;border-bottom:2px solid #344351}
+.name{font-size:34px;font-weight:800}.cb .name{color:#ff8a5b}.gpu .name{color:#c9ced4}.host{font:22px Mono,monospace;color:#8794a1}
+.clock{font:64px Mono,monospace;font-variant-numeric:tabular-nums}.state{padding:14px 30px;font:24px Mono,monospace;color:#a8b1bc;border-bottom:2px solid #24303b;min-height:62px}
+.state.wait{color:#ffcc66}.state.done{color:#48d890}.cb .state.done{color:#48d890}
+pre{flex:1;margin:0;padding:22px 30px;font:23px/1.5 Mono,monospace;white-space:pre-wrap;word-break:break-word;color:#dce3e8;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
+.result{padding:20px 30px;font:30px Mono,monospace;border-top:2px solid #24303b;min-height:78px}.cb .result{color:#ff8a5b}
+</style>
+</head>
+<body>
+<h1>Same request. Same model: Kimi K3.1 Pro.</h1>
+<div class="sub">"Fix this login code, write 12 tests, explain the bug." Each clock starts when that side writes its first word.</div>
+<main>
+<section class="lane cb" id="cerebras"><div class="head"><div><div class="name">Cerebras</div><div class="host">api.cerebras.ai</div></div><div class="clock">0.00s</div></div><div class="state">connecting</div><pre></pre><div class="result"></div></section>
+<section class="lane gpu" id="baseline"><div class="head"><div><div class="name">GPU host</div><div class="host">via OpenRouter</div></div><div class="clock">0.00s</div></div><div class="state">connecting</div><pre></pre><div class="result"></div></section>
+</main>
+<script>
+const lanes = {};
+for (const id of ['cerebras', 'baseline']) {
+  const el = document.getElementById(id);
+  lanes[id] = { el, clock: el.querySelector('.clock'), state: el.querySelector('.state'), pre: el.querySelector('pre'),
+    result: el.querySelector('.result'), host: el.querySelector('.host'), opened: performance.now(), first: null, end: null, text: '' };
+}
+function tick() {
+  const now = performance.now();
+  for (const lane of Object.values(lanes)) {
+    if (lane.first === null && lane.end === null) {
+      lane.state.className = 'state wait';
+      lane.state.textContent = `waiting for a first word… ${((now - lane.opened) / 1000).toFixed(1)}s` + (lane.refused ? `  (queue full, retried ${lane.refused}×)` : '');
+    } else if (lane.first !== null) {
+      lane.clock.textContent = (((lane.end ?? now) - lane.first) / 1000).toFixed(2) + 's';
+    }
+  }
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+const source = new EventSource('/events');
+source.onmessage = message => {
+  const e = JSON.parse(message.data), lane = lanes[e.lane];
+  if (e.type === 'refused') lane.refused = e.count;
+  if (e.type === 'provider' && e.lane === 'baseline') lane.host.textContent = `via OpenRouter · ${e.name}`;
+  if (e.type === 'text') {
+    if (lane.first === null) {
+      lane.first = performance.now();
+      const waited = (lane.first - lane.opened) / 1000;
+      lane.state.className = 'state';
+      lane.state.textContent = `waited ${waited.toFixed(1)}s before the first word` + (lane.refused ? ` (queue full ${lane.refused}×)` : '');
+    }
+    lane.text += e.text;
+    lane.pre.textContent = lane.text.slice(-1400);
+  }
+  if (e.type === 'done') {
+    lane.end = performance.now();
+    const secs = (lane.end - lane.first) / 1000;
+    lane.state.className = 'state done';
+    lane.state.textContent = `done: ${e.tokens.toLocaleString('en-US')} tokens written`;
+    lane.result.textContent = `${Math.round((e.tokens - 1) / secs).toLocaleString('en-US')} tokens / second`;
+  }
+  if (e.type === 'error') { lane.state.textContent = `error ${e.status}`; lane.end = performance.now(); }
+};
+</script>
+</body>
+</html>

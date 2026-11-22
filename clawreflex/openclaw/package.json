@@ -1,0 +1,33 @@
+{
+  "name": "@clawreflex/openclaw",
+  "version": "0.2.0-alpha.1",
+  "description": "Sandboxed repair evidence and explicit Apply/Revert commands for OpenClaw",
+  "type": "module",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "index.mjs",
+    "openclaw.plugin.json",
+    "skills",
+    "entry.mjs"
+  ],
+  "scripts": {
+    "test": "node --test test_plugin.mjs",
+    "test:monitor": "node --test test_monitor.mjs"
+  },
+  "openclaw": {
+    "extensions": [
+      "./entry.mjs"
+    ]
+  },
+  "peerDependencies": {
+    "openclaw": ">=2026.11.0 <2027.0.0"
+  },
+  "peerDependenciesMeta": {
+    "openclaw": {
+      "optional": true
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "clawreflex-container-smoke/v1",
+  "host": "linux",
+  "runtime": "docker",
+  "image": "docker.io/library/python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b",
+  "purpose": "Exercise the product container fallback with Bubblewrap selection disabled; this is not macOS execution",
+  "tests_run": 1,
+  "failures": 0,
+  "errors": 0,
+  "exit_code": 0,
+  "passed": true,
+  "wall_ms": 4371.522,
+  "macos_verified": false
+}

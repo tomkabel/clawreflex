@@ -1,0 +1,33 @@
+{
+  "id": "clawreflex",
+  "name": "ClawReflex",
+  "description": "Sandboxed RED/reference/GREEN repair proposals with explicit Apply/Revert commands.",
+  "skills": [
+    "./skills"
+  ],
+  "activation": {
+    "onStartup": true
+  },
+  "configSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  },
+  "version": "0.2.0-alpha.1",
+  "contracts": {
+    "tools": [
+      "clawreflex_probe",
+      "clawreflex_patch"
+    ]
+  },
+  "toolMetadata": {
+    "clawreflex_probe": {
+      "optional": true,
+      "sideEffecting": true
+    },
+    "clawreflex_patch": {
+      "optional": true,
+      "sideEffecting": true
+    }
+  }
+}

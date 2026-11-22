@@ -1,0 +1,22 @@
+{
+  "schema": "clawreflex-environment-evidence/v1",
+  "date": "2026-11-22",
+  "host_os": "linux",
+  "baseline_tests": {"top_level": 8, "nested": 5, "passed": 13},
+  "sandbox_smoke": {"bwrap": true, "docker_server_available": true, "podman_rootless": true},
+  "credentials": {"CEREBRAS_API_KEY": "unset", "OPENROUTER_API_KEY": "set-value-not-recorded"},
+  "film": {
+    "path": "out/agent-film/clawreflex-story/clawreflex-story.mp4",
+    "judge": "ffprobe -v error -show_entries format=duration -of json",
+    "duration_seconds": 46.0,
+    "maximum_seconds": 60,
+    "passed": true
+  },
+  "external_evidence": {
+    "macos_execution": "not_run",
+    "live_paired_benchmark": "not_run",
+    "real_repository_model_acceptance": "not_run",
+    "external_security_review": "not_performed",
+    "developer_pilot": "not_performed"
+  }
+}

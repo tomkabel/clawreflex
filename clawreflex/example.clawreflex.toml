@@ -1,0 +1,38 @@
+# Copy to <your-repo>/.clawreflex.toml and provide independent verification files.
+[workspace]
+targets = ["calculator.py"]
+ignore = ["verification/**", "build/**", "dist/**"]
+debounce_ms = 250
+queue_depth = 8
+apply_mode = "propose"
+provider_consent = false
+language = "python"
+max_file_bytes = 200000
+max_snapshot_bytes = 20000000
+max_snapshot_files = 2000
+
+[tests]
+runner = "unittest" # or pytest after installing clawreflex[pytest]
+path = "tests"
+pattern = "test_*.py"
+timeout_s = 20
+
+[budget]
+tokens = 4096
+deadline_s = 60
+
+[provider]
+# Set model/base_url/key_env for the provider driver. No key values belong here.
+model = ""
+base_url = "https://api.cerebras.ai/v1"
+key_env = "CEREBRAS_API_KEY"
+
+[privacy]
+redaction_patterns = []
+
+[[target]]
+glob = "calculator.py"
+reference = "verification/calculator_reference.py"
+regression = "verification/calculator_regression.py"
+heldout = "verification/calculator_heldout.py"
+contract = "double(x) returns exactly x multiplied by two"

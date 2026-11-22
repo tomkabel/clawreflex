@@ -1,0 +1,32 @@
+{
+  "slug": "clawreflex-story",
+  "why": "A real take, cut for a 12-year-old: Tom saves a login change in Zed; ClawReflex hands the save to Kimi in standard OpenClaw on Cerebras; Kimi proves the bug with an attack test (RED, checked against a hidden reference), writes a fix that is applied only after 8 of 8 tests pass (GREEN), and Zed reloads the fixed file. Then a live race of the same request on Cerebras and a GPU host. Every skipped wait is labelled with its length; the clip is built by clawreflex/cut.py from out/clawreflex/film/edl.json.",
+  "theme": "halftone",
+  "model": "Kimi K3.1 Pro",
+  "popin": {
+    "video": "out/clawreflex/film/clawreflex-story.mp4"
+  },
+  "claim": {
+    "number": 2000,
+    "unit": "tokens per second",
+    "footnote": "*Cerebras' stated speed for Kimi. Measured here under hackathon load: 383 tokens/s."
+  },
+  "scenes": [
+    {
+      "scene": "intro",
+      "intro": {
+        "title": "ClawReflex",
+        "description": "Every time you save, Kimi tries to break your code. If it gets in, it writes a fix, and keeps it only when every test passes."
+      }
+    },
+    {
+      "scene": "popin"
+    },
+    {
+      "scene": "claim"
+    },
+    {
+      "scene": "lockup"
+    }
+  ]
+}

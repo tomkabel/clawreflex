@@ -1,0 +1,189 @@
+{
+  "schema": "clawreflex-corpus-validation/v1",
+  "source": "20 seeded tasks from pinned OSS checkouts",
+  "sandbox": "bwrap --unshare-all; runtime-only mounts; environment cleared",
+  "model_acceptance_measured": false,
+  "passed": true,
+  "tasks": [
+    {
+      "task": "more-itertools-take-type",
+      "red_returncode": 1,
+      "green_returncode": 0,
+      "red_assertion_failure": true,
+      "red_output": "F\n======================================================================\nFAIL: test_contract (test_clawreflex_corpus.Contract.test_contract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_clawreflex_corpus.py\", line 5, in test_contract\n    self.assertEqual(app.take(2, [1,2,3]), [1,2])\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: (1, 2) != [1, 2]\n\n----------------------------------------------------------------------\nRan 1 test in 0.002s\n\nFAILED (failures=1)\n",
+      "green_output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n",
+      "wall_ms": 671.75
+    },
+    {
+      "task": "more-itertools-nth-default",
+      "red_returncode": 1,
+      "green_returncode": 0,
+      "red_assertion_failure": true,
+      "red_output": "F\n======================================================================\nFAIL: test_contract (test_clawreflex_corpus.Contract.test_contract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_clawreflex_corpus.py\", line 5, in test_contract\n    self.assertEqual(app.nth([], 2, 99), 99)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: None != 99\n\n----------------------------------------------------------------------\nRan 1 test in 0.002s\n\nFAILED (failures=1)\n",
+      "green_output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+      "wall_ms": 948.84
+    },
+    {
+      "task": "more-itertools-quantify",
+      "red_returncode": 1,
+      "green_returncode": 0,
+      "red_assertion_failure": true,
+      "red_output": "F\n======================================================================\nFAIL: test_contract (test_clawreflex_corpus.Contract.test_contract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_clawreflex_corpus.py\", line 5, in test_contract\n    self.assertEqual(app.quantify([True,True,False]), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: True != 2\n\n----------------------------------------------------------------------\nRan 1 test in 0.005s\n\nFAILED (failures=1)\n",
+      "green_output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n",
+      "wall_ms": 657.56
+    },
+    {
+      "task": "more-itertools-cycles",
+      "red_returncode": 1,
+      "green_returncode": 0,
+      "red_assertion_failure": true,
+      "red_output": "F\n======================================================================\nFAIL: test_contract (test_clawreflex_corpus.Contract.test_contract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_clawreflex_corpus.py\", line 5, in test_contract\n    self.assertEqual(list(app.ncycles([1,2], 2)), [1,2,1,2])\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Lists differ: [1, 2, 1, 2, 1, 2] != [1, 2, 1, 2]\n\nFirst list contains 2 additional elements.\nFirst extra element 4:\n1\n\n- [1, 2, 1, 2, 1, 2]\n?           ------\n\n+ [1, 2, 1, 2]\n\n----------------------------------------------------------------------\nRan 1 test in 0.005s\n\nFAILED (failures=1)\n",
+      "green_output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+      "wall_ms": 815.74
+    },
+    {
+      "task": "more-itertools-dotproduct",
+      "red_returncode": 1,
+      "green_returncode": 0,
+      "red_assertion_failure": true,
+      "red_output": "F\n======================================================================\nFAIL: test_contract (test_clawreflex_corpus.Contract.test_contract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_clawreflex_corpus.py\", line 5, in test_contract\n    self.assertEqual(app.dotproduct([1,2],[3,4]), 11)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 8 != 11\n\n----------------------------------------------------------------------\nRan 1 test in 0.002s\n\nFAILED (failures=1)\n",
+      "green_output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n",
+      "wall_ms": 567.63
+    },
+    {
+      "task": "more-itertools-powerset",
+      "red_returncode": 1,
+      "green_returncode": 0,
+      "red_assertion_failure": true,
+      "red_output": "F\n======================================================================\nFAIL: test_contract (test_clawreflex_corpus.Contract.test_contract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_clawreflex_corpus.py\", line 5, in test_contract\n    self.assertEqual(list(app.powerset([1,2])), [(),(1,),(2,),(1,2)])\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Lists differ: [(), (1,), (2,)] != [(), (1,), (2,), (1, 2)]\n\nSecond list contains 1 additional elements.\nFirst extra element 3:\n(1, 2)\n\n- [(), (1,), (2,)]\n+ [(), (1,), (2,), (1, 2)]\n?                ++++++++\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.002s\n\nFAILED (failures=1)\n",
+      "green_output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n",
+      "wall_ms": 863.57
+    },
+    {
+      "task": "more-itertools-first-default",
+      "red_returncode": 1,
+      "green_returncode": 0,
+      "red_assertion_failure": true,
+      "red_output": "F\n======================================================================\nFAIL: test_contract (test_clawreflex_corpus.Contract.test_contract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_clawreflex_corpus.py\", line 5, in test_contract\n    self.assertEqual(app.first_true([0,False], 99), 99)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: None != 99\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+      "green_output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+      "wall_ms": 794.5
+    },
+    {
+      "task": "more-itertools-prepend-order",
+      "red_returncode": 1,
+      "green_returncode": 0,
+      "red_assertion_failure": true,
+      "red_output": "F\n======================================================================\nFAIL: test_contract (test_clawreflex_corpus.Contract.test_contract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_clawreflex_corpus.py\", line 5, in test_contract\n    self.assertEqual(list(app.prepend(1, iter([2,3]))), [1,2,3])\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Lists differ: [2, 3, 1] != [1, 2, 3]\n\nFirst differing element 0:\n2\n1\n\n- [2, 3, 1]\n+ [1, 2, 3]\n\n----------------------------------------------------------------------\nRan 1 test in 0.005s\n\nFAILED (failures=1)\n",
+      "green_output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+      "wall_ms": 596.52
+    },
+    {
+      "task": "boltons-clamp",
+      "red_returncode": 1,
+      "green_returncode": 0,
+      "red_assertion_failure": true,
+      "red_output": "F\n======================================================================\nFAIL: test_contract (test_clawreflex_corpus.Contract.test_contract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_clawreflex_corpus.py\", line 5, in test_contract\n    self.assertEqual(app.clamp(3,0,5), 3)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 5 != 3\n\n----------------------------------------------------------------------\nRan 1 test in 0.003s\n\nFAILED (failures=1)\n",
+      "green_output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+      "wall_ms": 364.39
+    },
+    {
+      "task": "boltons-ceil-direction",
+      "red_returncode": 1,
+      "green_returncode": 0,
+      "red_assertion_failure": true,
+      "red_output": "F\n======================================================================\nFAIL: test_contract (test_clawreflex_corpus.Contract.test_contract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_clawreflex_corpus.py\", line 5, in test_contract\n    self.assertEqual(app.ceil(1.2), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^\nAssertionError: 1 != 2\n\n----------------------------------------------------------------------\nRan 1 test in 0.005s\n\nFAILED (failures=1)\n",
+      "green_output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+      "wall_ms": 390.25
+    },
+    {
+      "task": "boltons-floor-direction",
+      "red_returncode": 1,
+      "green_returncode": 0,
+      "red_assertion_failure": true,
+      "red_output": "F\n======================================================================\nFAIL: test_contract (test_clawreflex_corpus.Contract.test_contract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_clawreflex_corpus.py\", line 5, in test_contract\n    self.assertEqual(app.floor(1.8), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^\nAssertionError: 2 != 1\n\n----------------------------------------------------------------------\nRan 1 test in 0.002s\n\nFAILED (failures=1)\n",
+      "green_output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+      "wall_ms": 337.49
+    },
+    {
+      "task": "boltons-ceil-equality",
+      "red_returncode": 1,
+      "green_returncode": 0,
+      "red_assertion_failure": true,
+      "red_output": "F\n======================================================================\nFAIL: test_contract (test_clawreflex_corpus.Contract.test_contract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_clawreflex_corpus.py\", line 5, in test_contract\n    self.assertEqual(app.ceil(2,[1,2,3]), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 3 != 2\n\n----------------------------------------------------------------------\nRan 1 test in 0.004s\n\nFAILED (failures=1)\n",
+      "green_output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+      "wall_ms": 481.87
+    },
+    {
+      "task": "boltons-floor-equality",
+      "red_returncode": 1,
+      "green_returncode": 0,
+      "red_assertion_failure": true,
+      "red_output": "F\n======================================================================\nFAIL: test_contract (test_clawreflex_corpus.Contract.test_contract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_clawreflex_corpus.py\", line 5, in test_contract\n    self.assertEqual(app.floor(2,[1,2,3]), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 1 != 2\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+      "green_output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+      "wall_ms": 360.63
+    },
+    {
+      "task": "boltons-bitwise-or",
+      "red_returncode": 1,
+      "green_returncode": 0,
+      "red_assertion_failure": true,
+      "red_output": "F\n======================================================================\nFAIL: test_contract (test_clawreflex_corpus.Contract.test_contract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_clawreflex_corpus.py\", line 5, in test_contract\n    self.assertEqual((app.Bits(1) | app.Bits(2)).as_int(), 3)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 != 3\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+      "green_output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+      "wall_ms": 238.31
+    },
+    {
+      "task": "cachetools-kwargs-key",
+      "red_returncode": 1,
+      "green_returncode": 0,
+      "red_assertion_failure": true,
+      "red_output": "F\n======================================================================\nFAIL: test_contract (test_clawreflex_corpus.Contract.test_contract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_clawreflex_corpus.py\", line 5, in test_contract\n    self.assertEqual(app.hashkey(1,x=2) != app.hashkey(1,x=3), True)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False != True\n\n----------------------------------------------------------------------\nRan 1 test in 0.012s\n\nFAILED (failures=1)\n",
+      "green_output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n",
+      "wall_ms": 609.18
+    },
+    {
+      "task": "cachetools-positional-order",
+      "red_returncode": 1,
+      "green_returncode": 0,
+      "red_assertion_failure": true,
+      "red_output": "F\n======================================================================\nFAIL: test_contract (test_clawreflex_corpus.Contract.test_contract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_clawreflex_corpus.py\", line 5, in test_contract\n    self.assertEqual(tuple(app.hashkey(1,2)), (1,2))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Tuples differ: (2, 1) != (1, 2)\n\nFirst differing element 0:\n2\n1\n\n- (2, 1)\n+ (1, 2)\n\n----------------------------------------------------------------------\nRan 1 test in 0.004s\n\nFAILED (failures=1)\n",
+      "green_output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+      "wall_ms": 754.96
+    },
+    {
+      "task": "cachetools-method-self",
+      "red_returncode": 1,
+      "green_returncode": 0,
+      "red_assertion_failure": true,
+      "red_output": "F\n======================================================================\nFAIL: test_contract (test_clawreflex_corpus.Contract.test_contract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_clawreflex_corpus.py\", line 5, in test_contract\n    self.assertEqual(app.methodkey(\"a\",1) == app.methodkey(\"b\",1), True)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False != True\n\n----------------------------------------------------------------------\nRan 1 test in 0.008s\n\nFAILED (failures=1)\n",
+      "green_output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+      "wall_ms": 899.32
+    },
+    {
+      "task": "cachetools-positional-types",
+      "red_returncode": 1,
+      "green_returncode": 0,
+      "red_assertion_failure": true,
+      "red_output": "F\n======================================================================\nFAIL: test_contract (test_clawreflex_corpus.Contract.test_contract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_clawreflex_corpus.py\", line 5, in test_contract\n    self.assertEqual(app.typedkey(1) != app.typedkey(1.0), True)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False != True\n\n----------------------------------------------------------------------\nRan 1 test in 0.004s\n\nFAILED (failures=1)\n",
+      "green_output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+      "wall_ms": 1108.21
+    },
+    {
+      "task": "cachetools-keyword-types",
+      "red_returncode": 1,
+      "green_returncode": 0,
+      "red_assertion_failure": true,
+      "red_output": "F\n======================================================================\nFAIL: test_contract (test_clawreflex_corpus.Contract.test_contract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_clawreflex_corpus.py\", line 5, in test_contract\n    self.assertEqual(app.typedkey(x=1) != app.typedkey(x=1.0), True)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False != True\n\n----------------------------------------------------------------------\nRan 1 test in 0.002s\n\nFAILED (failures=1)\n",
+      "green_output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+      "wall_ms": 662.11
+    },
+    {
+      "task": "cachetools-typed-method",
+      "red_returncode": 1,
+      "green_returncode": 0,
+      "red_assertion_failure": true,
+      "red_output": "F\n======================================================================\nFAIL: test_contract (test_clawreflex_corpus.Contract.test_contract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/work/test_clawreflex_corpus.py\", line 5, in test_contract\n    self.assertEqual(app.typedmethodkey(\"a\",1) != app.typedmethodkey(\"a\",1.0), True)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False != True\n\n----------------------------------------------------------------------\nRan 1 test in 0.002s\n\nFAILED (failures=1)\n",
+      "green_output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+      "wall_ms": 248.04
+    }
+  ]
+}

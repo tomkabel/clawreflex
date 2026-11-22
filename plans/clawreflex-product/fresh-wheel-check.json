@@ -1,0 +1,28 @@
+{
+  "schema": "clawreflex-fresh-wheel-check/v1",
+  "mode": "local-offline-install",
+  "artifact": "clawreflex-0.2.0a1-py3-none-any.whl",
+  "artifact_sha256": "8c672e70704352ea870ded567705b830ac7214fc64b4384e58cc942afaf94567",
+  "version": "ClawReflex 0.2.0a1",
+  "elapsed_ms": 10690.8,
+  "selfcheck": {
+    "schema": "clawreflex-install-selfcheck/v1",
+    "mode": "offline-deterministic",
+    "passed": true,
+    "gates": {
+      "assertion_red": true,
+      "reference_green": true,
+      "independent_green": true,
+      "propose_default": true,
+      "apply_correct": true,
+      "revert_exact": true
+    },
+    "sandbox": "bubblewrap",
+    "tests_run": 4,
+    "elapsed_ms": 358.257,
+    "live_model_acceptance_measured": false,
+    "limitation": "Local offline smoke; not a stranger install, live provider run or second OS result."
+  },
+  "passed": true,
+  "limitation": "Same-host fresh venv, offline deterministic repair; no stranger, live provider or second-OS result."
+}

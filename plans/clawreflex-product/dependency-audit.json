@@ -1,0 +1,9 @@
+{
+  "schema": "clawreflex-dependency-audit/v1",
+  "tool": "pip-audit",
+  "scope": "local development venv including installed ClawReflex alpha; product currently has zero runtime dependencies",
+  "dependency_count": 52,
+  "vulnerabilities": 0,
+  "receipt": "out/clawreflex/releases/pip-audit.json",
+  "receipt_sha256": "88e3ec490d3b816dc80b38b3a32b49b5006d89e7c678821c4efacecfaea21986"
+}

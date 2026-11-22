@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:,">
+<title>ClawReflex — live verified repair</title>
+<style>
+
+:root{background:#0d131a;color:#f5f4ef;font-family:system-ui,sans-serif;font-synthesis:none}*{box-sizing:border-box}body{margin:0;padding:42px 48px 32px;min-height:100vh;background:radial-gradient(circle at 90% 0,#233323 0,transparent 34%),#0d131a}header{display:flex;align-items:flex-start;justify-content:space-between;border-bottom:2px solid #344351;padding-bottom:24px}.eyebrow{font:20px ui-monospace,monospace;color:#ff6a32;letter-spacing:2px}h1{font-size:58px;letter-spacing:-2px;margin:8px 0 0}.model{text-align:right;font:18px ui-monospace,monospace;color:#a8b1bc;line-height:1.7}.model strong{color:#f5f4ef}.grid{display:grid;grid-template-columns:1.06fr 1fr;gap:26px;margin-top:28px}.panel{background:#17212b;border:2px solid #344351;border-radius:22px;overflow:hidden}.panel-head{display:flex;justify-content:space-between;align-items:center;padding:20px 26px;border-bottom:1px solid #344351}.panel-head h2{font-size:22px;margin:0}.panel-head span{font:16px ui-monospace,monospace;color:#a8b1bc}pre{font:17px/1.55 ui-monospace,monospace;white-space:pre-wrap;word-break:break-word;margin:0;padding:24px 26px;color:#dce3e8;min-height:310px;max-height:510px;overflow:hidden}.status{padding:28px 30px 24px;background:#101820}.status-line{display:flex;justify-content:space-between;align-items:center}.badge{font-size:48px;font-weight:800;letter-spacing:-1px;color:#ff8a5b}.clock{font:64px ui-monospace,monospace;font-variant-numeric:tabular-nums}.phase{color:#a8b1bc;font-size:21px;margin-top:8px}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:24px 0 0}.step{border-top:5px solid #41505d;padding:14px 4px 0;font:16px ui-monospace,monospace;color:#8794a1}.step.active{border-color:#ff6a32;color:#ff8a5b}.step.done{border-color:#48d890;color:#48d890}.facts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#344351;border-top:1px solid #344351}.fact{background:#17212b;padding:18px 24px}.fact label{display:block;color:#a8b1bc;font-size:15px;margin-bottom:5px}.fact strong{font:20px ui-monospace,monospace}.green .badge{color:#48d890}.green .panel{border-color:#48d890}footer{display:flex;justify-content:space-between;margin-top:22px;font:16px ui-monospace,monospace;color:#a8b1bc}footer strong{color:#48d890}.hidden{display:none}
+.connection{margin-top:20px;display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:15px}.actions{margin-top:20px}button,input,select{font:inherit;border:1px solid #708294;border-radius:6px;padding:9px 12px;color:#f5f4ef;background:#17212b}button{cursor:pointer}button:hover:enabled{background:#263b4d}button:disabled{opacity:.45;cursor:default}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #ff8a5b;outline-offset:3px}#action-result{font-size:16px}pre{overflow:auto} @media(max-width:850px){body{padding:22px}h1{font-size:36px}.grid{grid-template-columns:1fr}.model{font-size:13px}.clock{font-size:42px}.badge{font-size:30px}footer{flex-wrap:wrap;gap:12px}}
+</style>
+</head>
+<body>
+<header><div><div class="eyebrow">STANDARD OPENCLAW · LIVE TOOL RECEIPTS</div><h1>CLAWREFLEX</h1></div><div class="model"><strong>KIMI K3.1 PRO ON CEREBRAS</strong><br>sandboxed Python · independent verification</div></header>
+<section class="connection" aria-label="Local server connection"><label for="token">Local access token</label> <input id="token" type="password" autocomplete="off" placeholder="Paste the local token" size="32"> <button id="connect" type="button">Connect</button> <label for="runs">Run</label> <select id="runs" aria-label="Run history"><option value="">Current run</option></select> <label for="filter">Filter history</label> <input id="filter" type="search" placeholder="Path or status"></section>
+<main class="grid">
+<section class="panel"><div class="panel-head"><h2 id="fixture">Waiting for fixture</h2><span>INPUT / EVIDENCE</span></div><pre id="source">Loading vulnerable module…</pre></section>
+<section class="panel" id="result"><div class="status"><div class="status-line"><div class="badge" id="badge">ON SAVE</div><div class="clock" id="clock">0.00<span>s</span></div></div><div class="phase" id="phase" role="status" aria-live="polite">Generate an exploit before proposing a repair.</div><div class="steps"><div class="step active" id="step-red">01 · PROVE RED</div><div class="step" id="step-patch">02 · PATCH</div><div class="step" id="step-green">03 · VERIFY GREEN</div></div></div><div class="facts"><div class="fact"><label>PROBE</label><strong id="probe">not submitted</strong></div><div class="fact"><label>ARTIFACT</label><strong id="artifact">not applied</strong></div></div></section>
+</main>
+<section class="actions" aria-label="Repair actions"><button id="apply" type="button" disabled>Apply verified patch</button> <button id="revert" type="button" disabled>Revert patch</button> <button id="cancel" type="button" disabled>Cancel run</button><p id="action-result" role="status" aria-live="polite"></p></section>
+<footer><span>NO PATCH BEFORE RED · REGRESSIONS + HELD-OUT TESTS</span><strong id="receipt">WAITING FOR EVIDENCE</strong></footer>
+<script type="module">
+const $=id=>document.getElementById(id);
+let token='', selected='', busy=false, current=null, timer=null;
+const keys=new Map();
+function headers(){return {'Content-Type':'application/json',Authorization:'Bearer '+token}}
+function path(suffix){return selected?'/runs/'+encodeURIComponent(selected)+'/'+suffix:'/'+suffix}
+function step(id,state){$(id).className='step '+state}
+function show(s){
+ current=s;
+ const probe=s.probe||{}, patch=s.patch||{}, status=s.status||s.state||'waiting';
+ const red=probe.ok===true||s.probe_accepted===true, green=patch.ok===true;
+ $('fixture').textContent=s.title||s.path||'Repair evidence';
+ $('source').textContent=s['patch.diff']||s['vulnerable.py']||'No source received';
+ $('result').classList.toggle('green',green);
+ $('badge').textContent=green?'GREEN VERIFIED':red?'RED CONFIRMED':status.toUpperCase().replaceAll('_',' ');
+ $('phase').textContent=green?(s.applied?'Verified patch applied to target.':'Verified proposal ready for review.'):red?'Assertion RED and independent reference GREEN.':status==='queued'?'Queued; no result yet.':'Waiting for verified evidence.';
+ $('probe').textContent=red?'RED · reference PASS':'not confirmed';
+ $('artifact').textContent=s.applied?'applied':green?'proposal only':'not applied';
+ $('receipt').textContent=green?(s.applied?'REAL RECEIPT · APPLIED':'REAL RECEIPT · PROPOSED'):'WAITING FOR EVIDENCE';
+ $('clock').textContent=typeof s.elapsed_s==='number'?s.elapsed_s.toFixed(2)+' s':'—';
+ step('step-red',red?'done':'active');step('step-patch',green?'done':red?'active':'');step('step-green',green?'done':'');
+ $('apply').disabled=busy||!green||s.applied===true;
+ $('revert').disabled=busy||s.applied!==true;
+ $('cancel').disabled=busy||['done','cancelled','failed','PATCH_APPLIED','PATCH_REVERTED'].includes(status);
+}
+async function update(){
+ if(!token||busy)return;
+ try{
+  const response=await fetch('/state',{headers:headers(),cache:'no-store'});
+  if(!response.ok)throw new Error(response.status===401?'Access token rejected.':'Local state unavailable ('+response.status+').');
+  const state=await response.json();
+  if(Array.isArray(state.runs)){
+   const query=$('filter').value.toLowerCase(), entries=state.runs.filter(run=>JSON.stringify([run.path,run.title,run.status]).toLowerCase().includes(query));
+   $('runs').replaceChildren(...entries.map(run=>{const option=document.createElement('option');option.value=run.id||run.run_id;option.textContent=(run.path||run.title||option.value)+' · '+(run.status||run.state||'waiting');return option}));
+   if(!entries.some(run=>(run.id||run.run_id)===selected))selected=entries[0]?.id||entries[0]?.run_id||'';
+   $('runs').value=selected;
+   if(selected){const res=await fetch(path('state'),{headers:headers(),cache:'no-store'});if(!res.ok)throw new Error('Run unavailable.');show(await res.json())}
+   else $('phase').textContent='No matching runs yet.';
+  }else show(state);
+ }catch(error){$('phase').textContent=error.message;for(const action of ['apply','revert','cancel'])$(action).disabled=true}
+}
+async function action(name){
+ if(busy||!current)return;
+ busy=true;for(const a of ['apply','revert','cancel'])$(a).disabled=true;
+ const identity=selected+':'+name+':'+(current.source_sha256||current.status);
+ if(!keys.has(identity))keys.set(identity,crypto.randomUUID());
+ try{
+  const response=await fetch(path('action/'+name),{method:'POST',headers:headers(),body:JSON.stringify({idempotency_key:keys.get(identity)})});
+  const result=await response.json();
+  $('action-result').textContent=response.ok&&result.ok!==false?name+' completed; receipt recorded.':name+' refused: '+(result.error||'verification or file identity changed');
+ }catch{$('action-result').textContent='Connection failed. Inspect the receipt; no success is implied. Retrying uses the same action key.'}
+ finally{busy=false;await update()}
+}
+$('connect').addEventListener('click',()=>{token=$('token').value;update();if(timer)clearInterval(timer);timer=setInterval(update,1500)});
+$('runs').addEventListener('change',()=>{selected=$('runs').value;update()});
+$('filter').addEventListener('input',update);
+for(const name of ['apply','revert','cancel'])$(name).addEventListener('click',()=>action(name));
+// Token stays in memory. It is never placed in a URL, localStorage, or telemetry.
+</script>
+</body>
+</html>

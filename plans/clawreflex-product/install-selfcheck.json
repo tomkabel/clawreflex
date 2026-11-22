@@ -1,0 +1,18 @@
+{
+  "schema": "clawreflex-install-selfcheck/v1",
+  "mode": "offline-deterministic",
+  "passed": true,
+  "gates": {
+    "assertion_red": true,
+    "reference_green": true,
+    "independent_green": true,
+    "propose_default": true,
+    "apply_correct": true,
+    "revert_exact": true
+  },
+  "sandbox": "bubblewrap",
+  "tests_run": 4,
+  "elapsed_ms": 1252.372,
+  "live_model_acceptance_measured": false,
+  "limitation": "Local offline smoke; not a stranger install, live provider run or second OS result."
+}

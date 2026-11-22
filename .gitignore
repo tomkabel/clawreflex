@@ -1,0 +1,31 @@
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Runtime evidence and private workspace state
+out/
+.clawreflex/
+*.bak
+
+# Python
+__pycache__/
+*.py[cod]
+.venv*/
+*.egg-info/
+build/
+dist/
+.coverage*
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+mutants/
+
+# Node and local tooling
+node_modules/
+.playwright-mcp/
+.tmp/
+.DS_Store

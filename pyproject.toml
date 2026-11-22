@@ -1,0 +1,64 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "clawreflex"
+version = "0.2.0a1"
+description = "Evidence-driven, sandboxed on-save repair verification"
+readme = "clawreflex/README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [{name = "ClawReflex contributors"}]
+dependencies = ["tomli>=2.2; python_version < '3.11'"]
+classifiers = ["Development Status :: 3 - Alpha", "Programming Language :: Python :: 3"]
+
+[project.optional-dependencies]
+pytest = ["pytest>=8.3,<10"]
+dev = ["build>=1.2", "coverage[toml]>=7.6", "mypy>=1.13", "pytest>=8.3", "ruff>=0.9", "mutmut>=3.0", "pip-audit>=2.7", "bandit>=1.8"]
+
+[project.scripts]
+clawreflex = "clawreflex.cli:main"
+clawreflex-server = "clawreflex.server:main"
+clawreflex-bench = "clawreflex.benchmark:main"
+clawreflex-doctor = "clawreflex.doctor:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["clawreflex", "clawreflex.*"]
+exclude = ["clawreflex.openclaw.node_modules*"]
+namespaces = true
+
+[tool.setuptools.package-data]
+clawreflex = ["web/*.html", "openclaw/*.mjs", "openclaw/*.json", "openclaw/skills/*/SKILL.md", "*.md", "*.toml", "corpus.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["clawreflex"]
+pythonpath = ["."]
+addopts = "-ra"
+
+[tool.coverage.run]
+source = ["clawreflex"]
+omit = ["clawreflex/test_*.py", "clawreflex/tests/*", "clawreflex/cut.py", "clawreflex/rig.py"]
+
+[tool.coverage.report]
+show_missing = true
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+include = ["clawreflex/**/*.py"]
+
+[tool.ruff.lint]
+select = ["E9", "F"]
+
+[tool.mypy]
+python_version = "3.10"
+files = ["clawreflex/cli.py", "clawreflex/__init__.py"]
+check_untyped_defs = true
+warn_unused_ignores = true
+follow_imports = "silent"

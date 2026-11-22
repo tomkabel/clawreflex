@@ -1,0 +1,22 @@
+{
+  "schema": "clawreflex-mutation-baseline/v1",
+  "tool": "mutmut3.8.1",
+  "scope": "validation.py only, frozen Phase1 source; not full engine score",
+  "counts": {
+    "killed": 76,
+    "survived": 302,
+    "no tests": 12,
+    "timeout": 0,
+    "suspicious": 0,
+    "not checked": 0
+  },
+  "generated_mutants": 390,
+  "killed": 76,
+  "survived": 302,
+  "no_tests": 12,
+  "score_killed_over_generated": 0.19487179487179487,
+  "target": 0.7,
+  "passed": false,
+  "source_sha256": "f001d2e60b90ab6516a07fcea6a0eac89245911db1cbbe9b0cda87f90551d3ce",
+  "receipt": "out/clawreflex/mutation-validation/results.txt"
+}

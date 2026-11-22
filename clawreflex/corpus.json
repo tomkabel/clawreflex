@@ -1,0 +1,229 @@
+{
+  "schema": "clawreflex-seeded-corpus/v1",
+  "note": "20 mutations in pinned real OSS sources. No model repair acceptance has been measured. Reference originals are evaluation-only.",
+  "repositories": {
+    "more-itertools": {
+      "url": "https://github.com/more-itertools/more-itertools.git",
+      "commit": "8c1a6ef241b51ff055e89219f050ccf4f15f37f6",
+      "tag": "v10.8.0",
+      "license": "MIT",
+      "pythonpath": "."
+    },
+    "boltons": {
+      "url": "https://github.com/mahmoud/boltons.git",
+      "commit": "c23dbdadb6fecdf505eb4231559561913b84c13f",
+      "tag": "25.0.0",
+      "license": "BSD-3-Clause",
+      "pythonpath": "."
+    },
+    "cachetools": {
+      "url": "https://github.com/tkem/cachetools.git",
+      "commit": "ca7508fd56103a1b6d6f17c8e93e36c60b44ca25",
+      "tag": "v6.2.1",
+      "license": "MIT",
+      "pythonpath": "src"
+    }
+  },
+  "tasks": [
+    {
+      "id": "more-itertools-take-type",
+      "repository": "more-itertools",
+      "target": "more_itertools/recipes.py",
+      "source_sha256": "31afa4b813590c585a4036c82604669eb1bce96cdaba96cec94577bfc8dedf1c",
+      "before": "return list(islice(iterable, n))",
+      "after": "return tuple(islice(iterable, n))",
+      "contract": "take returns a list of the first n values.",
+      "test_source": "import unittest\nfrom more_itertools import recipes as app\nclass Contract(unittest.TestCase):\n    def test_contract(self):\n        self.assertEqual(app.take(2, [1,2,3]), [1,2])\n"
+    },
+    {
+      "id": "more-itertools-nth-default",
+      "repository": "more-itertools",
+      "target": "more_itertools/recipes.py",
+      "source_sha256": "31afa4b813590c585a4036c82604669eb1bce96cdaba96cec94577bfc8dedf1c",
+      "before": "return next(islice(iterable, n, None), default)",
+      "after": "return next(islice(iterable, n, None), None)",
+      "contract": "nth returns the provided default when exhausted.",
+      "test_source": "import unittest\nfrom more_itertools import recipes as app\nclass Contract(unittest.TestCase):\n    def test_contract(self):\n        self.assertEqual(app.nth([], 2, 99), 99)\n"
+    },
+    {
+      "id": "more-itertools-quantify",
+      "repository": "more-itertools",
+      "target": "more_itertools/recipes.py",
+      "source_sha256": "31afa4b813590c585a4036c82604669eb1bce96cdaba96cec94577bfc8dedf1c",
+      "before": "return sum(map(pred, iterable))",
+      "after": "return max(map(pred, iterable))",
+      "contract": "quantify counts all matching elements.",
+      "test_source": "import unittest\nfrom more_itertools import recipes as app\nclass Contract(unittest.TestCase):\n    def test_contract(self):\n        self.assertEqual(app.quantify([True,True,False]), 2)\n"
+    },
+    {
+      "id": "more-itertools-cycles",
+      "repository": "more-itertools",
+      "target": "more_itertools/recipes.py",
+      "source_sha256": "31afa4b813590c585a4036c82604669eb1bce96cdaba96cec94577bfc8dedf1c",
+      "before": "return chain.from_iterable(repeat(tuple(iterable), n))",
+      "after": "return chain.from_iterable(repeat(tuple(iterable), n + 1))",
+      "contract": "ncycles repeats input exactly n times.",
+      "test_source": "import unittest\nfrom more_itertools import recipes as app\nclass Contract(unittest.TestCase):\n    def test_contract(self):\n        self.assertEqual(list(app.ncycles([1,2], 2)), [1,2,1,2])\n"
+    },
+    {
+      "id": "more-itertools-dotproduct",
+      "repository": "more-itertools",
+      "target": "more_itertools/recipes.py",
+      "source_sha256": "31afa4b813590c585a4036c82604669eb1bce96cdaba96cec94577bfc8dedf1c",
+      "before": "return sum(map(mul, vec1, vec2))",
+      "after": "return max(map(mul, vec1, vec2))",
+      "contract": "dotproduct sums pairwise products.",
+      "test_source": "import unittest\nfrom more_itertools import recipes as app\nclass Contract(unittest.TestCase):\n    def test_contract(self):\n        self.assertEqual(app.dotproduct([1,2],[3,4]), 11)\n"
+    },
+    {
+      "id": "more-itertools-powerset",
+      "repository": "more-itertools",
+      "target": "more_itertools/recipes.py",
+      "source_sha256": "31afa4b813590c585a4036c82604669eb1bce96cdaba96cec94577bfc8dedf1c",
+      "before": "return chain.from_iterable(combinations(s, r) for r in range(len(s) + 1))",
+      "after": "return chain.from_iterable(combinations(s, r) for r in range(len(s)))",
+      "contract": "powerset includes the complete input set.",
+      "test_source": "import unittest\nfrom more_itertools import recipes as app\nclass Contract(unittest.TestCase):\n    def test_contract(self):\n        self.assertEqual(list(app.powerset([1,2])), [(),(1,),(2,),(1,2)])\n"
+    },
+    {
+      "id": "more-itertools-first-default",
+      "repository": "more-itertools",
+      "target": "more_itertools/recipes.py",
+      "source_sha256": "31afa4b813590c585a4036c82604669eb1bce96cdaba96cec94577bfc8dedf1c",
+      "before": "return next(filter(pred, iterable), default)",
+      "after": "return next(filter(pred, iterable), None)",
+      "contract": "first_true returns the given default if no item matches.",
+      "test_source": "import unittest\nfrom more_itertools import recipes as app\nclass Contract(unittest.TestCase):\n    def test_contract(self):\n        self.assertEqual(app.first_true([0,False], 99), 99)\n"
+    },
+    {
+      "id": "more-itertools-prepend-order",
+      "repository": "more-itertools",
+      "target": "more_itertools/recipes.py",
+      "source_sha256": "31afa4b813590c585a4036c82604669eb1bce96cdaba96cec94577bfc8dedf1c",
+      "before": "return chain([value], iterator)",
+      "after": "return chain(iterator, [value])",
+      "contract": "prepend places its value before the input sequence.",
+      "test_source": "import unittest\nfrom more_itertools import recipes as app\nclass Contract(unittest.TestCase):\n    def test_contract(self):\n        self.assertEqual(list(app.prepend(1, iter([2,3]))), [1,2,3])\n"
+    },
+    {
+      "id": "boltons-clamp",
+      "repository": "boltons",
+      "target": "boltons/mathutils.py",
+      "source_sha256": "298f80d272dd69510a3c6ed50e6ad76f28ac5e9f92aec0aab81322f7c88369a4",
+      "before": "return min(max(x, lower), upper)",
+      "after": "return max(min(x, lower), upper)",
+      "contract": "clamp preserves an input inside the bounds.",
+      "test_source": "import unittest\nfrom boltons import mathutils as app\nclass Contract(unittest.TestCase):\n    def test_contract(self):\n        self.assertEqual(app.clamp(3,0,5), 3)\n"
+    },
+    {
+      "id": "boltons-ceil-direction",
+      "repository": "boltons",
+      "target": "boltons/mathutils.py",
+      "source_sha256": "298f80d272dd69510a3c6ed50e6ad76f28ac5e9f92aec0aab81322f7c88369a4",
+      "before": "return _ceil(x)",
+      "after": "return _floor(x)",
+      "contract": "ceil rounds fractional inputs upward.",
+      "test_source": "import unittest\nfrom boltons import mathutils as app\nclass Contract(unittest.TestCase):\n    def test_contract(self):\n        self.assertEqual(app.ceil(1.2), 2)\n"
+    },
+    {
+      "id": "boltons-floor-direction",
+      "repository": "boltons",
+      "target": "boltons/mathutils.py",
+      "source_sha256": "298f80d272dd69510a3c6ed50e6ad76f28ac5e9f92aec0aab81322f7c88369a4",
+      "before": "return _floor(x)",
+      "after": "return _ceil(x)",
+      "contract": "floor rounds fractional inputs downward.",
+      "test_source": "import unittest\nfrom boltons import mathutils as app\nclass Contract(unittest.TestCase):\n    def test_contract(self):\n        self.assertEqual(app.floor(1.8), 1)\n"
+    },
+    {
+      "id": "boltons-ceil-equality",
+      "repository": "boltons",
+      "target": "boltons/mathutils.py",
+      "source_sha256": "298f80d272dd69510a3c6ed50e6ad76f28ac5e9f92aec0aab81322f7c88369a4",
+      "before": "i = bisect.bisect_left(options, x)",
+      "after": "i = bisect.bisect_right(options, x)",
+      "contract": "ceil includes an exactly matching option.",
+      "test_source": "import unittest\nfrom boltons import mathutils as app\nclass Contract(unittest.TestCase):\n    def test_contract(self):\n        self.assertEqual(app.ceil(2,[1,2,3]), 2)\n"
+    },
+    {
+      "id": "boltons-floor-equality",
+      "repository": "boltons",
+      "target": "boltons/mathutils.py",
+      "source_sha256": "298f80d272dd69510a3c6ed50e6ad76f28ac5e9f92aec0aab81322f7c88369a4",
+      "before": "i = bisect.bisect_right(options, x)",
+      "after": "i = bisect.bisect_left(options, x)",
+      "contract": "floor includes an exactly matching option.",
+      "test_source": "import unittest\nfrom boltons import mathutils as app\nclass Contract(unittest.TestCase):\n    def test_contract(self):\n        self.assertEqual(app.floor(2,[1,2,3]), 2)\n"
+    },
+    {
+      "id": "boltons-bitwise-or",
+      "repository": "boltons",
+      "target": "boltons/mathutils.py",
+      "source_sha256": "298f80d272dd69510a3c6ed50e6ad76f28ac5e9f92aec0aab81322f7c88369a4",
+      "before": "return Bits(self.val | other.val, max(self.len, other.len))",
+      "after": "return Bits(self.val & other.val, max(self.len, other.len))",
+      "contract": "Bits OR combines set bits from both arguments.",
+      "test_source": "import unittest\nfrom boltons import mathutils as app\nclass Contract(unittest.TestCase):\n    def test_contract(self):\n        self.assertEqual((app.Bits(1) | app.Bits(2)).as_int(), 3)\n"
+    },
+    {
+      "id": "cachetools-kwargs-key",
+      "repository": "cachetools",
+      "target": "src/cachetools/keys.py",
+      "source_sha256": "00e81fa22fa88a804e9c4124d75e7ff6ab341ca212ad89db715e05d21c99d729",
+      "before": "return _HashedTuple(args + sum(sorted(kwargs.items()), _kwmark))",
+      "after": "return _HashedTuple(args)",
+      "contract": "hashkey distinguishes keyword values.",
+      "test_source": "import unittest\nfrom cachetools import keys as app\nclass Contract(unittest.TestCase):\n    def test_contract(self):\n        self.assertEqual(app.hashkey(1,x=2) != app.hashkey(1,x=3), True)\n"
+    },
+    {
+      "id": "cachetools-positional-order",
+      "repository": "cachetools",
+      "target": "src/cachetools/keys.py",
+      "source_sha256": "00e81fa22fa88a804e9c4124d75e7ff6ab341ca212ad89db715e05d21c99d729",
+      "before": "return _HashedTuple(args)",
+      "after": "return _HashedTuple(args[::-1])",
+      "contract": "hashkey preserves positional order.",
+      "test_source": "import unittest\nfrom cachetools import keys as app\nclass Contract(unittest.TestCase):\n    def test_contract(self):\n        self.assertEqual(tuple(app.hashkey(1,2)), (1,2))\n"
+    },
+    {
+      "id": "cachetools-method-self",
+      "repository": "cachetools",
+      "target": "src/cachetools/keys.py",
+      "source_sha256": "00e81fa22fa88a804e9c4124d75e7ff6ab341ca212ad89db715e05d21c99d729",
+      "before": "return hashkey(*args, **kwargs)",
+      "after": "return hashkey(self, *args, **kwargs)",
+      "contract": "methodkey ignores the method receiver.",
+      "test_source": "import unittest\nfrom cachetools import keys as app\nclass Contract(unittest.TestCase):\n    def test_contract(self):\n        self.assertEqual(app.methodkey(\"a\",1) == app.methodkey(\"b\",1), True)\n"
+    },
+    {
+      "id": "cachetools-positional-types",
+      "repository": "cachetools",
+      "target": "src/cachetools/keys.py",
+      "source_sha256": "00e81fa22fa88a804e9c4124d75e7ff6ab341ca212ad89db715e05d21c99d729",
+      "before": "key += tuple(type(v) for v in args)",
+      "after": "key += ()",
+      "contract": "typedkey distinguishes positional value types.",
+      "test_source": "import unittest\nfrom cachetools import keys as app\nclass Contract(unittest.TestCase):\n    def test_contract(self):\n        self.assertEqual(app.typedkey(1) != app.typedkey(1.0), True)\n"
+    },
+    {
+      "id": "cachetools-keyword-types",
+      "repository": "cachetools",
+      "target": "src/cachetools/keys.py",
+      "source_sha256": "00e81fa22fa88a804e9c4124d75e7ff6ab341ca212ad89db715e05d21c99d729",
+      "before": "key += tuple(type(v) for _, v in sorted(kwargs.items()))",
+      "after": "key += ()",
+      "contract": "typedkey distinguishes keyword value types.",
+      "test_source": "import unittest\nfrom cachetools import keys as app\nclass Contract(unittest.TestCase):\n    def test_contract(self):\n        self.assertEqual(app.typedkey(x=1) != app.typedkey(x=1.0), True)\n"
+    },
+    {
+      "id": "cachetools-typed-method",
+      "repository": "cachetools",
+      "target": "src/cachetools/keys.py",
+      "source_sha256": "00e81fa22fa88a804e9c4124d75e7ff6ab341ca212ad89db715e05d21c99d729",
+      "before": "return typedkey(*args, **kwargs)",
+      "after": "return hashkey(*args, **kwargs)",
+      "contract": "typedmethodkey includes value type information.",
+      "test_source": "import unittest\nfrom cachetools import keys as app\nclass Contract(unittest.TestCase):\n    def test_contract(self):\n        self.assertEqual(app.typedmethodkey(\"a\",1) != app.typedmethodkey(\"a\",1.0), True)\n"
+    }
+  ]
+}
